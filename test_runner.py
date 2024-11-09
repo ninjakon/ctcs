@@ -1,3 +1,5 @@
+from safetensors import torch
+
 from models import HuggingFaceModel
 from textprocessors import StemmingProcessor, LemmatizationProcessor
 
@@ -18,19 +20,19 @@ class TestRunner:
     mode = "print"
 
     # dictionary of model names and instantiated models
-    models = {
-        "facebook/blenderbot-400M-distill": HuggingFaceModel(
-            task="text2text-generation",
-            model="facebook/blenderbot-400M-distill",
-        )
-    }
+    models = {}
 
     # processors, currently hard coded but could be list
     stemmer = StemmingProcessor()
     lemmatizer = LemmatizationProcessor()
 
-    def __init__(self, mode="print"):
+    def __init__(self, mode="print", device="cpu"):
         self.mode = mode
+        self.models["facebook/blenderbot-400M-distill"] = HuggingFaceModel(
+            task="text2text-generation",
+            model="facebook/blenderbot-400M-distill",
+            device=device
+        )
 
     def run_tests(self, prompt):
         processed_prompts = {
