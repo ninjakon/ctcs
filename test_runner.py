@@ -1,5 +1,6 @@
 from models import HuggingFaceModel, ChatGPTModel
 from textprocessors import StemmingProcessor, LemmatizationProcessor
+from dotenv import dotenv_values
 
 
 def pretty_print_answer(method, prompt, answer):
@@ -8,6 +9,14 @@ def pretty_print_answer(method, prompt, answer):
     print(f"\t{prompt}")
     print(f"\tAnswer:")
     print(f"\t{answer}")
+
+
+def get_openai_key():
+    try:
+        openai_api_key = dotenv_values(".env")['CHATGPT_API_SECRET']
+        return openai_api_key
+    except KeyError:
+        return None
 
 
 class TestRunner:
@@ -31,7 +40,14 @@ class TestRunner:
             model="facebook/blenderbot-400M-distill",
             device=device
         )
-        self.models["gpt-3.5-turbo"] = ChatGPTModel("gpt-3.5-turbo")
+        openai_api_key = get_openai_key()
+        if openai_api_key is not None:
+            self.models["gpt-3.5-turbo"] = ChatGPTModel(
+                model="gpt-3.5-turbo",
+                openai_api_key=openai_api_key
+            )
+        else:
+            print("No OpenAI API key found - Skipping ChatGPT model(s)")
 
     def run_tests(self, prompt):
         processed_prompts = {

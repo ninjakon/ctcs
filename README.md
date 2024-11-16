@@ -27,6 +27,19 @@ OR
 python3 main.py --device cpu
 ```
 
+## Using ChatGPT
+
+In order to use the OpenAI API you need to add a ".env" file with you API key.
+
+```
+CHATGPT_API_SECRET=YOUR_SECRET_KEY
+```
+
+You can set this up on https://platform.openai.com/ -
+if you don't specify an API key the test runner will simply skip the ChatGPT models and only run the local ones.
+
+
+
 ## Adding new models
 
 // TODO
