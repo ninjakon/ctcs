@@ -1,5 +1,5 @@
 from models import HuggingFaceModel, ChatGPTModel
-from textprocessors import StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor
+from textprocessors import StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor, ShortWordRemovalProcessor, StopWordRemovalProcessor
 from dotenv import dotenv_values
 
 
@@ -33,6 +33,8 @@ class TestRunner:
     stemmer = StemmingProcessor()
     lemmatizer = LemmatizationProcessor()
     random_remover = RandomRemovalProcessor()
+    short_word_remover = ShortWordRemovalProcessor()
+    stop_word_remover = StopWordRemovalProcessor()
 
     def __init__(self, mode="print", device="cpu"):
         self.mode = mode
@@ -54,7 +56,9 @@ class TestRunner:
         processed_prompts = {
             "stemmer": self.stemmer.tokenize(prompt),
             "lemmatizer": self.lemmatizer.tokenize(prompt),
-            "random_remover": self.random_remover.tokenize(prompt)
+            "random_remover": self.random_remover.tokenize(prompt),
+            "short_word_remover": self.short_word_remover.tokenize(prompt),
+            "stop_word_remover": self.stop_word_remover.tokenize(prompt)
         }
 
         for model_name, model in self.models.items():
