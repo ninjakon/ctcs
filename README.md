@@ -1,6 +1,26 @@
 # Model Test Runner
 ### CTCS 2024/25 - UIBK
 
+Investigating Text Processing Strategies for Decreasing Token Count in LLM Inputs
+
+## Topic Requirements
+
+Pick 1-2 tasks with their datasets where each request to LLM contains relatively large amount of text:
+
+- QA, summarization, sentiment estimation, story understanding, etc.
+- Choose optimal prompts
+
+Experiment with some of the potential, diverse approaches for decreasing token count:
+
+- Random word removal
+- Short word removal
+- Redundant word removal
+- Stop word removal
+- Text simplification (using existing library)
+- Shortening words by abbreviating them
+- Any other idea…
+- Measure the token count save vs. the accuracy drop
+
 ## Running the test runner
 
 It is recommended to use a Python virtual environment.
