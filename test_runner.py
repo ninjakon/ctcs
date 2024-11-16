@@ -1,6 +1,4 @@
-from safetensors import torch
-
-from models import HuggingFaceModel
+from models import HuggingFaceModel, ChatGPTModel
 from textprocessors import StemmingProcessor, LemmatizationProcessor
 
 
@@ -33,6 +31,7 @@ class TestRunner:
             model="facebook/blenderbot-400M-distill",
             device=device
         )
+        self.models["gpt-3.5-turbo"] = ChatGPTModel("gpt-3.5-turbo")
 
     def run_tests(self, prompt):
         processed_prompts = {
