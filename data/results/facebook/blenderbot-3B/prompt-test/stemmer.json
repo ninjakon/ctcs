@@ -1,0 +1,5 @@
+{
+    "processor": "stemmer",
+    "prompt": "who is the presid of the usa",
+    "answer": " The President of the United States is the head of the executive branch of the federal government."
+}

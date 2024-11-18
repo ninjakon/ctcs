@@ -1,0 +1,5 @@
+{
+    "processor": "random_remover",
+    "prompt": "Who is the president of the",
+    "answer": "I'm sorry, can you please specify the country you are referring to?"
+}

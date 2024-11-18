@@ -1,0 +1,5 @@
+{
+    "processor": "lemmatizer",
+    "prompt": "I have recently visit a farm in England The farmer and his wife treat me to a breakfast use only ingredients find on the farm However I could not help but wonder why cow egg be so much bigger than chicken egg Do you know why cow egg be so much bigger than chicken egg",
+    "answer": "It seems there may be a misunderstanding here. Cow do not lay eggs. They give birth to live calves. Chicken are the ones that lay eggs, and their eggs are smaller compared to other animals like cows because chickens are smaller birds. The size of an egg is generally correlated with the size of the bird that lays it."
+}

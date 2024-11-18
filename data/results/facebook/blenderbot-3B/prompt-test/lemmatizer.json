@@ -1,0 +1,5 @@
+{
+    "processor": "lemmatizer",
+    "prompt": "Who be the president of the USA",
+    "answer": " I'm not sure, but I do know that the president is the head of the executive branch of the federal government."
+}

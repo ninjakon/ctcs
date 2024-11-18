@@ -1,0 +1,5 @@
+{
+    "processor": "lemmatizer",
+    "prompt": "I have recently visit a farm in England The farmer and his wife treat me to a breakfast use only ingredients find on the farm However I could not help but wonder why cow egg be so much bigger than chicken egg Do you know why cow egg be so much bigger than chicken egg",
+    "answer": " Cow eggs are bigger because they are fertilized. I don't know why they are bigger."
+}
