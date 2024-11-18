@@ -6,19 +6,10 @@ from textprocessors import (
     StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor,
     ShortWordRemovalProcessor, StopWordRemovalProcessor
 )
-from dotenv import dotenv_values
-from .utils import print_model_answer, write_model_answer_to_json_file
+from .utils import get_openai_key, print_model_answer, write_model_answer_to_json_file
 
 
 DATA_DIR = "./data/results"
-
-
-def get_openai_key():
-    try:
-        openai_api_key = dotenv_values(".env")['CHATGPT_API_SECRET']
-        return openai_api_key
-    except KeyError:
-        return None
 
 
 class TestRunner:

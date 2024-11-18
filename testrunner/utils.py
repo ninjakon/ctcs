@@ -1,5 +1,14 @@
 import os
 import json
+from dotenv import dotenv_values
+
+
+def get_openai_key():
+    try:
+        openai_api_key = dotenv_values(".env")['CHATGPT_API_SECRET']
+        return openai_api_key
+    except KeyError:
+        return None
 
 
 def print_model_answer(processor, prompt, answer):
