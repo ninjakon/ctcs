@@ -6,7 +6,9 @@ from textprocessors import (
     StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor,
     ShortWordRemovalProcessor, StopWordRemovalProcessor
 )
-from .utils import get_openai_key, print_model_answer, write_model_answer_to_json_file
+from .utils import (
+    get_openai_key, print_model_answer, write_model_answer_to_json_file, get_missing_tests
+)
 
 
 DATA_DIR = "./data/results"
@@ -104,37 +106,25 @@ class TestRunner:
 
     def __test_in_persistent_skip_mode(self):
         # first check which tests need to be repeated
-        missing_tests = {}
-        # iterate over all prompts
-        for prompt_file_name, prompt in self.prompts.items():
-            # iterate over all models
-            for model_name, model in self.models.items():
-                print(f"Checking results for model '{model_name}' and prompt '{prompt_file_name}'...")
-                result_dir = os.path.join(DATA_DIR, model_name, prompt_file_name)
-                # results are checked by looking for "DATA_DIR/model-name/prompt-name/processor.json"
-                for processor_name in self.processors.keys():
-                    json_path = os.path.join(result_dir, f"{processor_name}.json")
-                    # if the file exists the test does not need to run again
-                    if os.path.isfile(json_path):
-                        print(f"> Found '{json_path}'")
-                        print(f"> Skipping processing prompt '{prompt_file_name}' with '{processor_name}' for model '{model_name}'!")
-                    # if the file exists declare the combination of prompt, processor and model as missing
-                    else:
-                        missing_test = (processor_name, model_name)
-                        if prompt_file_name not in missing_tests.keys():
-                            missing_tests[prompt_file_name] = [missing_test]
-                        else:
-                            missing_tests[prompt_file_name].append(missing_test)
+        missing_tests = get_missing_tests(
+            data_dir=DATA_DIR,
+            prompts=self.prompts,
+            models=self.models,
+            processors=self.processors
+        )
         # iterate over all missing tests
         for prompt_file_name, missing_test in missing_tests.items():
             # always run the "unmodified" prompt for sanity reasons
             prompt = self.prompts[prompt_file_name]
-            processed_prompts = {"unmodified": prompt}
+            processed_prompts = {}
             # process prompts (with missing processors) first since it is not necessary to repeat that for each model
             missing_processors = [p for p, _ in missing_test]
             for processor_name in missing_processors:
                 if processor_name not in processed_prompts.keys():
-                    processed_prompts[processor_name] = self.processors[processor_name].tokenize(prompt)
+                    if processor_name == "unmodified":
+                        processed_prompts["unmodified"] = prompt
+                    else:
+                        processed_prompts[processor_name] = self.processors[processor_name].tokenize(prompt)
             # iterate over missing models and run missing prompts through them
             missing_models = [m for _, m in missing_test]
             for model_name in missing_models:
