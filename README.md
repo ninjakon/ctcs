@@ -1,8 +1,8 @@
 # Model Test Runner
+
 ### CTCS 2024/25 - UIBK
 
 Investigating Text Processing Strategies for Decreasing Token Count in LLM Inputs
-
 
 ## Topic Requirements
 
@@ -22,15 +22,16 @@ Experiment with some of the potential, diverse approaches for decreasing token c
 - [x] Any other idea…
 - Measure the token count save vs. the accuracy drop
 
-
 ## Goals
 
 ### Sentiment Analysis
+
 - Dataset: https://www.kaggle.com/datasets/priyamchoksi/rotten-tomato-movie-reviews-1-44m-rows
 - Models: ChatGPT (& another one from HuggingFace)
-- Validation: use `scoreSentiment` from dataset to compare to our results 
+- Validation: use `scoreSentiment` from dataset to compare to our results
 
 ### Question-Answering
+
 - Dataset: SimpleQuestion dataset from https://github.com/ad-freiburg/large-qa-datasets?tab=readme-ov-file#simplequestions
 - Models: ChatGPT & facebook/blenderbot-3B
 - Validation: ask ChatGPT if the questions have been answered correctly
@@ -38,10 +39,10 @@ Experiment with some of the potential, diverse approaches for decreasing token c
 - Alternatively: use prompts from https://github.com/jujumilk3/leaked-system-prompts/
 
 ### Spam Detection
+
 - Dataset: https://www.kaggle.com/datasets/ashfakyeafi/spam-email-classification
 - Models: ChatGPT & mrm8488/bert-tiny-finetuned-enron-spam-detection
-- Validation: 
-
+- Validation:
 
 ## Running the test runner
 
@@ -56,14 +57,25 @@ source ./.venv/bin/activate
 pip3 install -r requirements.txt # this may take some time
 ```
 
-After setting up all of that you can run it by simply calling `main.py`.
-To install Cuda on Windows you need to download the CudaToolKit https://developer.nvidia.com/cuda-downloads and set up Torch for your system https://pytorch.org/get-started/locally/
+The requirements do not specify `torch` since it is specific for each system, if you are lucky you can simply add it to your virtual environment with:
+
+```
+pip3 install torch
+```
+
+If not, you can find install instructions for `torch` on the official [PyTorch](https://pytorch.org/get-started/locally/) website.
+
+Depending on your system you may also be able to use `torch` with Cuda.
+To install Cuda on Windows for example you need to download the [CudaToolKit](https://developer.nvidia.com/cuda-downloads) first.
+
 If you don't have Cuda you should also be able to run on CPU which you can do by simply not passing any argument for `--device`.
 
 ```
 python3 main.py --device cuda
 ```
+
 OR
+
 ```
 python3 main.py --device cpu # cpu is default
 ```
@@ -76,15 +88,18 @@ Simply put there are three modes:
 ```
 python3 main.py --mode print # print is default, prints results to the console
 ```
+
 OR
+
 ```
 python3 main.py --mode persistent # writes results to JSONs in the "data/results" directory
 ```
+
 OR
+
 ```
 python3 main.py --mode persistent-skip # writes results to JSONs in the "data/results" directory, skipping existing results
 ```
-
 
 ## Using ChatGPT
 
@@ -97,26 +112,24 @@ CHATGPT_API_SECRET=YOUR_SECRET_KEY
 You can set this up on https://platform.openai.com/ -
 if you don't specify an API key the test runner will simply skip the ChatGPT models and only run the local ones.
 
-
 ## Adding new models
 
 Please make sure your model class is placed in the `models` package and extends the `BaseModel` class.
 The `BaseModel` class is rather simple to allow flexibility as it only specifies two functions:
 
-- `__init__()` could initialize a library (e.g. HuggingFace) or an API endpoint (e.g. ChatGPT) or whatever it needs to run 
+- `__init__()` could initialize a library (e.g. HuggingFace) or an API endpoint (e.g. ChatGPT) or whatever it needs to run
 - `run(prompt)` takes a prompt and runs it using whatever it set up in the `__init__` function
 
 In order to add models to the test runner simply put them into the models dictionary in the `__init__` of the `TestRunner` class.
 
 This is purposefully done in the `__init__` and not the class definition since it allows to pass parameters like `device` for the HuggingFace models.
 
-
 ## Adding new processors
 
 Please make sure your processor class is placed in the `textprocessors` package and extends the `BaseProcessor` class.
 The `BaseProcessor` class is rather simple to allow flexibility as it only specifies two functions:
 
-- `__init__()` could initialize a library (e.g. nltk) or whatever it needs to run 
+- `__init__()` could initialize a library (e.g. nltk) or whatever it needs to run
 - `tokenize(prompt)` takes a prompt and returns a processed version of it using whatever it set up in the `__init__` function
 
 In order to add processors to the test runner simply put them into the processors dictionary in the `__init__` of the `TestRunner` class.
