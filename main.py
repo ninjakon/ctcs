@@ -1,14 +1,13 @@
 import argparse
-import os.path
 import torch
-from os import listdir
-from os.path import isfile, join
+import os
 
 from testrunner import TestRunner
 
 
 DEFAULT_MODE = "print"
 DEFAULT_DEVICE = "cpu"
+DEFAULT_DATA_DIR = "./data/results"
 
 
 def process_arguments():
@@ -17,10 +16,12 @@ def process_arguments():
     parser = argparse.ArgumentParser("Model Test Runner")
     parser.add_argument("--mode", help="Whether to print results or write them to files.", type=str)
     parser.add_argument("--device", help="The device to run HuggingFace models on.", type=str)
+    parser.add_argument("--data-dir", help="Directory to store results in.", type=str)
     args = parser.parse_args()
 
     mode = args.mode
     device = args.device
+    data_dir = args.data_dir
 
     if mode is None:
         print("> You did not specify a mode ('print' | 'persistent' | 'persistent-skip').")
@@ -33,17 +34,25 @@ def process_arguments():
         print(f"> So by default the pipeline will use '{DEFAULT_DEVICE}'.")
         device = "cpu"
     else:
-        print(f"> The device to run HuggingFace models on is '{device}' as specified.")
         if device == "cuda" and not torch.cuda.is_available():
             print("> You tried to set the device to 'cuda' but it is not available.")
             print("> Switching to 'cpu' instead.")
             device = "cpu"
-    return mode, device
+        else:
+            print(f"> The device to run HuggingFace models on is '{device}' as specified.")
+    if data_dir is None:
+        print("> You did not specify a directory to store results in.")
+        print(f"> So by default the pipeline will use '{DEFAULT_DATA_DIR}'.")
+        data_dir = DEFAULT_DATA_DIR
+    else:
+        print(f"> Using directory '{data_dir}' to store results as specified.")
+
+    return mode, device, data_dir
 
 
 def read_prompt_files(prompt_path="./data/prompts"):
     prompt_file_paths = [
-        os.path.join(prompt_path, f) for f in listdir(prompt_path) if isfile(join(prompt_path, f))
+        os.path.join(prompt_path, f) for f in os.listdir(prompt_path) if os.path.isfile(os.path.join(prompt_path, f))
     ]
     prompts = {}
     for prompt_file_path in prompt_file_paths:
@@ -54,9 +63,9 @@ def read_prompt_files(prompt_path="./data/prompts"):
 
 
 def main():
-    mode, device = process_arguments()
+    mode, device, data_dir = process_arguments()
     prompts = read_prompt_files()
-    test_runner = TestRunner(mode=mode, prompts=prompts, device=device)
+    test_runner = TestRunner(mode=mode, prompts=prompts, device=device, data_dir=data_dir)
     test_runner.run_tests()
 
 

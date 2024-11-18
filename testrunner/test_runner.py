@@ -11,9 +11,6 @@ from .utils import (
 )
 
 
-DATA_DIR = "./data/results"
-
-
 class TestRunner:
 
     # mode in which the tests should run
@@ -28,9 +25,10 @@ class TestRunner:
     # dictionary of processor names and instantiated processors, initialized in __init__
     processors = {}
 
-    def __init__(self, mode="print", prompts=None, device="cpu"):
+    def __init__(self, mode="print", prompts=None, device="cpu", data_dir="./data/results"):
         self.mode = mode
         self.prompts = prompts if prompts else {}
+        self.data_dir = data_dir
 
         # Dev Note: add new processors here
         self.processors["stemmer"] = StemmingProcessor()
@@ -90,7 +88,7 @@ class TestRunner:
             for model_name, model in self.models.items():
                 print(f"Running model '{model_name}'...")
                 # remove result directory if it exists since this mode re-runs all tests
-                result_dir = os.path.join(DATA_DIR, model_name, prompt_file_name)
+                result_dir = os.path.join(self.data_dir, model_name, prompt_file_name)
                 if os.path.exists(result_dir):
                     shutil.rmtree(result_dir)
                 os.makedirs(result_dir)
@@ -107,7 +105,7 @@ class TestRunner:
     def __test_in_persistent_skip_mode(self):
         # first check which tests need to be repeated
         missing_tests = get_missing_tests(
-            data_dir=DATA_DIR,
+            data_dir=self.data_dir,
             prompts=self.prompts,
             models=self.models,
             processors=self.processors
@@ -130,7 +128,7 @@ class TestRunner:
             for model_name in missing_models:
                 print(f"Running model '{model_name}'...")
                 # make sure the result directory exists and create it if not
-                result_dir = os.path.join(DATA_DIR, model_name, prompt_file_name)
+                result_dir = os.path.join(self.data_dir, model_name, prompt_file_name)
                 if not os.path.exists(result_dir):
                     os.makedirs(result_dir)
                 # run the missing prompts through the model and save the results to json
