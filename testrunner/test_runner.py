@@ -2,7 +2,10 @@ import os
 import shutil
 
 from models import HuggingFaceModel, ChatGPTModel
-from textprocessors import StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor
+from textprocessors import (
+    StemmingProcessor, LemmatizationProcessor, RandomRemovalProcessor,
+    ShortWordRemovalProcessor, StopWordRemovalProcessor
+)
 from dotenv import dotenv_values
 from .utils import print_model_answer, write_model_answer_to_json_file
 
@@ -40,6 +43,8 @@ class TestRunner:
         self.processors["stemmer"] = StemmingProcessor()
         self.processors["lemmatizer"] = LemmatizationProcessor()
         self.processors["random_remover"] = RandomRemovalProcessor()
+        self.processors["short_word_remover"] = ShortWordRemovalProcessor()
+        self.processors["stop_word_remover"] = StopWordRemovalProcessor()
 
         # Dev Note: add new models here
         self.models["facebook/blenderbot-3B"] = HuggingFaceModel(
