@@ -1,0 +1,5 @@
+{
+    "processor": "short_word_remover",
+    "prompt": "president",
+    "answer": " President is the head of the executive branch of the federal government of the United States"
+}

@@ -1,0 +1,5 @@
+{
+    "processor": "stop_word_remover",
+    "prompt": "recently visited farm England farmer wife treated breakfast using ingredients found farm However could help wonder cow eggs much bigger chicken eggs know cow eggs much bigger chicken eggs",
+    "answer": " Cow eggs are much bigger than chicken eggs.  Do you know why that is?"
+}

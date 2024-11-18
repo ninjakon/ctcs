@@ -1,0 +1,5 @@
+{
+    "processor": "short_word_remover",
+    "prompt": "president",
+    "answer": "As the President, you hold the highest office in the executive branch of the government. Your responsibilities include leading the country, making important decisions on policies and laws, representing the nation both domestically and internationally, and serving as the Commander-in-Chief of the armed forces. It is a position of great influence and responsibility."
+}

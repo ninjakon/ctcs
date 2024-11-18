@@ -1,0 +1,5 @@
+{
+    "processor": "stop_word_remover",
+    "prompt": "president USA",
+    "answer": " Have you heard of the president of the United States, Donald J. Trump? He is the head of the executive branch of the federal government."
+}

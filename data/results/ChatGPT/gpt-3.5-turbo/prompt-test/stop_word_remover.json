@@ -1,0 +1,5 @@
+{
+    "processor": "stop_word_remover",
+    "prompt": "president USA",
+    "answer": "The current President of the United States is Joseph R. Biden Jr. He took office on January 20, 2021."
+}
