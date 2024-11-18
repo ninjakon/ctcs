@@ -13,14 +13,34 @@ Pick 1-2 tasks with their datasets where each request to LLM contains relatively
 
 Experiment with some of the potential, diverse approaches for decreasing token count:
 
-- Random word removal
-- Short word removal
-- Redundant word removal
-- Stop word removal
-- Text simplification (using existing library)
-- Shortening words by abbreviating them
-- Any other idea…
+- [x] Random word removal
+- [x] Short word removal
+- [ ] Redundant word removal (Arno)
+- [x] Stop word removal
+- [ ] Text simplification (using existing library) (Bernd)
+- [ ] Shortening words by abbreviating them (Sonja)
+- [x] Any other idea…
 - Measure the token count save vs. the accuracy drop
+
+
+## Goals
+
+### Sentiment Analysis
+- Dataset: https://www.kaggle.com/datasets/priyamchoksi/rotten-tomato-movie-reviews-1-44m-rows
+- Models: ChatGPT (& another one from HuggingFace)
+- Validation: use `scoreSentiment` from dataset to compare to our results 
+
+### Question-Answering
+- Dataset: SimpleQuestion dataset from https://github.com/ad-freiburg/large-qa-datasets?tab=readme-ov-file#simplequestions
+- Models: ChatGPT & facebook/blenderbot-3B
+- Validation: ask ChatGPT if the questions have been answered correctly
+
+- Alternatively: use prompts from https://github.com/jujumilk3/leaked-system-prompts/
+
+### Spam Detection
+- Dataset: https://www.kaggle.com/datasets/ashfakyeafi/spam-email-classification
+- Models: ChatGPT & mrm8488/bert-tiny-finetuned-enron-spam-detection
+- Validation: 
 
 
 ## Running the test runner
