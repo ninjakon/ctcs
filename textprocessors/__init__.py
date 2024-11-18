@@ -1,3 +1,5 @@
 from .stemming_processor import StemmingProcessor
 from .lemmatization_processor import LemmatizationProcessor
 from .random_removal_processor import RandomRemovalProcessor
+from .short_word_removal_processor import ShortWordRemovalProcessor
+from .stop_word_removal_processor import StopWordRemovalProcessor
